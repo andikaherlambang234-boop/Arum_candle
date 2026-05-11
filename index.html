@@ -1,1 +1,1388 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LEXICON AURUM — The Complete Candlestick Intelligence for Gold</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Bebas+Neue&family=Share+Tech+Mono&family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#04050c;
+  --paper2:#070810;
+  --ink:#e4ddd0;
+  --ink2:#a09890;
+  --ink3:#5a5550;
+  --gold:#c49830;
+  --gold2:#dbb84a;
+  --gold3:#f0d878;
+  --goldhi:#fff8e0;
+  --red:#b83838;
+  --red2:#d04848;
+  --green:#2a8a68;
+  --green2:#3aaa82;
+  --border:#14151f;
+  --border2:#1c1d2e;
+  --bull:#c9a44b;
+  --bear:#c94040;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'EB Garamond',serif;
+  font-size:17px;
+  line-height:1.82;
+  counter-reset:chapter;
+}
+/* ── Grain texture ── */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;
+}
+/* ── Layout ── */
+.page{position:relative;z-index:1;max-width:820px;margin:0 auto;padding:0 24px 100px;}
 
+/* ── Book Cover ── */
+.cover{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:60px 0;position:relative;
+}
+.cover::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 50% at 50% 40%, rgba(196,152,48,0.06) 0%, transparent 70%);
+  pointer-events:none;
+}
+.cover-ornament{
+  font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:6px;
+  color:var(--gold);text-transform:uppercase;margin-bottom:40px;opacity:0.6;
+}
+.cover-ornament-line{
+  display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:8px;
+}
+.ornament-line{width:80px;height:1px;background:linear-gradient(90deg,transparent,var(--gold));}
+.ornament-line.r{background:linear-gradient(90deg,var(--gold),transparent);}
+.ornament-diamond{width:5px;height:5px;background:var(--gold);transform:rotate(45deg);}
+
+.cover-roman{
+  font-family:'Cinzel',serif;font-size:11px;letter-spacing:8px;
+  color:var(--gold2);opacity:0.5;margin-bottom:24px;text-transform:uppercase;
+}
+.cover-title{
+  font-family:'Cormorant Garamond',serif;font-weight:300;
+  font-size:clamp(52px,11vw,92px);letter-spacing:4px;line-height:0.92;
+  color:var(--goldhi);
+  text-shadow:0 0 80px rgba(196,152,48,0.2);
+  margin-bottom:16px;
+}
+.cover-title em{font-style:italic;color:var(--gold2);}
+.cover-subtitle{
+  font-family:'Cinzel',serif;font-size:clamp(10px,2vw,14px);
+  letter-spacing:8px;color:var(--ink3);margin-bottom:40px;
+  text-transform:uppercase;
+}
+.cover-rule{
+  width:200px;height:1px;margin:0 auto 32px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.cover-desc{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:19px;color:var(--ink2);max-width:520px;line-height:1.9;
+  margin-bottom:40px;
+}
+.cover-byline{
+  font-family:'Share Tech Mono',monospace;font-size:9px;
+  letter-spacing:5px;color:var(--ink3);text-transform:uppercase;
+}
+.cover-seal{
+  display:inline-block;margin-top:28px;
+  border:1px solid rgba(196,152,48,0.3);
+  padding:6px 20px;
+  font-family:'Share Tech Mono',monospace;font-size:8px;
+  letter-spacing:4px;color:var(--red2);text-transform:uppercase;
+  animation:sealPulse 3s ease-in-out infinite;
+}
+@keyframes sealPulse{0%,100%{opacity:1}50%{opacity:0.4}}
+
+/* ── Chapter Separator ── */
+.chapter-sep{
+  text-align:center;margin:70px 0 48px;
+  position:relative;
+}
+.chapter-sep::before{
+  content:'';display:block;width:100%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--border2),var(--gold),var(--border2),transparent);
+  margin-bottom:28px;
+}
+.chapter-eyebrow{
+  font-family:'Share Tech Mono',monospace;font-size:9px;
+  letter-spacing:6px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;
+}
+.chapter-number{
+  font-family:'Cormorant Garamond',serif;font-weight:300;
+  font-size:clamp(64px,12vw,104px);line-height:0.9;
+  color:var(--gold);opacity:0.12;letter-spacing:2px;margin-bottom:-8px;
+}
+.chapter-title{
+  font-family:'Cormorant Garamond',serif;font-weight:600;
+  font-size:clamp(26px,5vw,40px);letter-spacing:1px;
+  color:var(--goldhi);line-height:1.2;margin-bottom:8px;
+}
+.chapter-title em{font-style:italic;color:var(--gold2);font-weight:300;}
+.chapter-subtitle{
+  font-family:'EB Garamond',serif;font-style:italic;
+  font-size:16px;color:var(--ink3);
+}
+
+/* ── Body text ── */
+.p{margin-bottom:20px;color:var(--ink);}
+.p em{color:var(--gold2);font-style:normal;font-weight:500;}
+.p strong{color:var(--goldhi);font-weight:600;}
+.p .r{color:var(--red2);}
+.p .g{color:var(--green2);}
+.p .b{color:#5090cc;}
+.indent{text-indent:2em;}
+
+/* ── Pull Quote ── */
+.pull{
+  border-left:2px solid var(--gold);margin:28px 0;padding:14px 24px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;
+  color:var(--gold2);line-height:1.65;background:rgba(196,152,48,0.03);
+}
+
+/* ── Chart Container ── */
+.chart-wrap{
+  margin:28px 0;border:1px solid var(--border2);
+  background:var(--paper2);overflow:hidden;
+}
+.chart-label{
+  padding:9px 16px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.chart-fig{
+  font-family:'Share Tech Mono',monospace;font-size:8px;
+  letter-spacing:3px;color:var(--gold);text-transform:uppercase;
+}
+.chart-title-text{
+  font-family:'Share Tech Mono',monospace;font-size:9px;
+  letter-spacing:1px;color:var(--ink3);
+}
+.chart-svg-wrap{padding:12px 8px 6px;}
+.chart-caption{
+  padding:8px 16px 12px;
+  font-family:'Share Tech Mono',monospace;font-size:9px;
+  letter-spacing:1px;color:var(--ink3);line-height:1.7;
+  border-top:1px solid var(--border);
+}
+
+/* ── Insight Boxes ── */
+.insight{
+  border:1px solid rgba(196,152,48,0.2);
+  background:rgba(196,152,48,0.03);
+  padding:18px 22px;margin:22px 0;position:relative;
+}
+.insight::before{
+  content:'◆ INSIGHT';position:absolute;top:-9px;left:14px;
+  background:var(--paper2);padding:0 8px;
+  font-family:'Share Tech Mono',monospace;font-size:8px;
+  letter-spacing:4px;color:var(--gold);
+}
+.insight-title{
+  font-family:'Cormorant Garamond',serif;font-weight:600;
+  font-size:16px;letter-spacing:1px;color:var(--gold2);margin-bottom:10px;
+}
+.insight-body{font-size:15px;color:var(--ink2);line-height:1.8;}
+.insight-body strong{color:var(--ink);}
+.insight-body em{color:var(--gold2);font-style:normal;}
+
+/* ── Secret Box ── */
+.secret{
+  border:1px solid rgba(184,56,56,0.25);
+  background:rgba(184,56,56,0.03);
+  padding:18px 22px;margin:22px 0;position:relative;
+}
+.secret::before{
+  content:'◆ ABOVE MASTER';position:absolute;top:-9px;left:14px;
+  background:var(--paper2);padding:0 8px;
+  font-family:'Share Tech Mono',monospace;font-size:8px;
+  letter-spacing:4px;color:var(--red2);
+}
+.secret-body{font-size:15px;color:var(--ink2);line-height:1.8;}
+.secret-body strong{color:var(--ink);}
+.secret-body em{color:var(--gold2);font-style:normal;}
+
+/* ── Rules ── */
+.rules{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0;}
+.rules li{
+  padding:9px 14px;border-left:2px solid var(--border2);
+  font-size:15px;line-height:1.65;color:var(--ink2);
+}
+.rules li.g{border-left-color:var(--green2);}
+.rules li.r{border-left-color:var(--red2);}
+.rules li.a{border-left-color:var(--gold);}
+.rules li strong{color:var(--ink);}
+
+/* ── Chapter Divider ── */
+.sect-rule{
+  display:flex;align-items:center;gap:12px;margin:36px 0 28px;
+}
+.sr-l{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border2));}
+.sr-r{flex:1;height:1px;background:linear-gradient(90deg,var(--border2),transparent);}
+.sr-d{width:5px;height:5px;background:var(--gold);transform:rotate(45deg);opacity:0.6;}
+.sr-t{font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:4px;color:var(--ink3);text-transform:uppercase;}
+
+/* ── Score Table ── */
+.score-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;}
+.score-table th{
+  font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--gold);
+  padding:8px 12px;border-bottom:1px solid var(--border2);text-align:left;
+}
+.score-table td{
+  padding:8px 12px;border-bottom:1px solid var(--border);
+  color:var(--ink2);vertical-align:top;line-height:1.5;
+}
+.score-table td strong{color:var(--ink);}
+.score-table tr:hover td{background:rgba(196,152,48,0.02);}
+
+/* ── Grid 2 ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+@media(max-width:600px){.g2{grid-template-columns:1fr;}}
+.cell{border:1px solid var(--border);padding:16px;background:rgba(0,0,0,0.15);}
+.cell-h{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:14px;letter-spacing:1px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+.cell-h.g{color:var(--green2);}
+.cell-h.r{color:var(--red2);}
+.cell-h.a{color:var(--gold2);}
+.cell-body{font-size:13px;color:var(--ink2);line-height:1.75;}
+.cell-body strong{color:var(--ink);}
+
+/* ── Footer ── */
+.book-footer{
+  text-align:center;padding:50px 0 20px;margin-top:80px;
+  border-top:1px solid var(--border2);
+}
+.book-footer-title{
+  font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;
+  font-size:28px;color:var(--gold);letter-spacing:4px;margin-bottom:12px;
+}
+.book-footer-text{
+  font-family:'Share Tech Mono',monospace;font-size:9px;
+  letter-spacing:3px;color:var(--ink3);line-height:2.2;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ═══════════════════════════ COVER ═══════════════════════════ -->
+<div class="cover">
+  <div class="cover-ornament">
+    <div class="cover-ornament-line">
+      <div class="ornament-line"></div>
+      <div class="ornament-diamond"></div>
+      <span>Restricted · Master Intelligence · Gold Markets</span>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-line r"></div>
+    </div>
+  </div>
+  <div class="cover-roman">Liber Primvs · MMXXV</div>
+  <div class="cover-title"><em>Lexicon</em><br>AURUM</div>
+  <div class="cover-subtitle">The Complete Candlestick Intelligence for Gold</div>
+  <div class="cover-rule"></div>
+  <div class="cover-desc">
+    Ilmu membaca candle yang tidak diajarkan di kursus manapun.<br>
+    Dua belas dimensi tersembunyi di dalam setiap candle gold.<br>
+    Dari anatomi hingga sidik jari institusional.
+  </div>
+  <div class="cover-byline">Kupas Tuntas · Detail Rinci · Di Atas Master Level</div>
+  <div><div class="cover-seal">◼ Not For General Distribution</div></div>
+</div>
+
+<!-- ═══════════════════════════ PREFACE ═══════════════════════════ -->
+<div class="chapter-sep">
+  <div class="chapter-eyebrow">// Pembukaan</div>
+  <div class="chapter-number">∞</div>
+  <div class="chapter-title">Mengapa Candle Gold Berbeda<br>dari <em>Semua Aset Lainnya</em></div>
+  <div class="chapter-subtitle">Paradoks yang hanya dipahami segelintir orang di dunia</div>
+</div>
+
+<p class="p">Gold adalah satu-satunya aset yang diperdagangkan <em>24 jam penuh</em>, di <em>tiga kontinen secara simultan</em>, oleh <em>bank sentral, hedge fund, dan petani India</em> sekaligus. Ini menciptakan dinamika candle yang tidak ada duanya — tidak bisa disamakan dengan saham, tidak bisa disamakan dengan forex pasangan biasa.</p>
+
+<p class="p">Trader biasa melihat candle gold sebagai batang sederhana dengan ekor. Trader master melihat <em>rekaman pertempuran antara dua kekuatan raksasa</em> dalam rentang waktu tertentu. Tapi di atas master ada lagi — mereka yang melihat candle sebagai <em>dokumen forensik</em>: siapa yang membeli, seberapa cepat, apakah dengan keyakinan atau kepanikan, apakah ada institusi di baliknya atau hanya retail yang ikut-ikutan.</p>
+
+<div class="pull">
+  "Setiap candle adalah berita. Pertanyaannya bukan 'harga naik atau turun' — tapi 'siapa yang memindahkan harga, seberapa kuat, dan apakah mereka selesai?'"
+</div>
+
+<p class="p">Buku ini membahas dua belas dimensi tersembunyi dalam setiap candle. Sembilan di antaranya tidak Anda temukan di buku manapun. Ini bukan teori — ini adalah bahasa yang digunakan pasar itu sendiri.</p>
+
+<!-- ═══════════════════════════ BAB 1: DNA CANDLE ═══════════════════════════ -->
+<div class="chapter-sep">
+  <div class="chapter-eyebrow">// Bab Pertama</div>
+  <div class="chapter-number">I</div>
+  <div class="chapter-title">DNA Candle Gold —<br>Empat Zona <em>dan Dimensi Kelima</em></div>
+  <div class="chapter-subtitle">Anatomi lengkap yang tidak pernah diajarkan secara utuh</div>
+</div>
+
+<p class="p">Semua orang tahu candle terdiri dari body dan shadow. Itu adalah pengetahuan dasar. Yang tidak diajarkan: setiap candle memiliki <em>lima dimensi</em>, bukan empat. Dimensi kelima inilah yang membedakan pembacaan amatir dari pembacaan professional.</p>
+
+<div class="chart-wrap">
+  <div class="chart-label">
+    <span class="chart-fig">Gambar 1.1</span>
+    <span class="chart-title-text">Anatomi Lengkap Candle Gold — Lima Zona Tersembunyi</span>
+  </div>
+  <div class="chart-svg-wrap" id="chart-anatomy"></div>
+  <div class="chart-caption">Satu candle bullish gold dengan semua zona berlabel. Perhatikan zona ketiga (Body Battlefield) yang hampir tidak pernah dibahas di literatur manapun.</div>
+</div>
+
+<p class="p">Empat zona yang umum diketahui adalah: <em>upper shadow, upper body, lower body, lower shadow</em>. Tapi ada zona tersembunyi yang berada <em>di antara</em> shadow dan body — zona transisi penolakan. Di zona ini tersimpan informasi tentang seberapa keras sisi yang kalah berjuang sebelum menyerah.</p>
+
+<div class="insight">
+  <div class="insight-title">Dimensi Kelima: "Close Speed" — Yang Tidak Pernah Diajarkan</div>
+  <div class="insight-body">
+    Dalam 24 jam gold, setiap candle M15 terbentuk selama persis 15 menit. Pertanyaan yang tidak pernah diajukan: <em>kapan dalam 15 menit itu harga mencapai titik closenya?</em><br><br>
+    <strong>Skenario A:</strong> Harga mencapai close (misalnya titik tinggi hari ini) pada menit ke-3, lalu BERTAHAN di sana selama 12 menit berikutnya = candle dengan close speed LAMBAT. Artinya: buyer kuat, tidak ada tekanan jual yang berarti, posisi sangat dikontrol.<br><br>
+    <strong>Skenario B:</strong> Harga bergerak naik secara linier sampai detik-detik terakhir, baru close di titik tinggi = close speed CEPAT. Artinya: momen beli masih berjalan, momentum sangat kuat, kemungkinan besar candle berikutnya melanjutkan.<br><br>
+    <strong>Skenario C:</strong> Harga mencapai titik tertinggi pada menit ke-5, tapi kemudian <em>turun sedikit</em> dan close di bawah high itu (menciptakan upper shadow kecil) = buyer mencapai batas, ada tekanan jual yang mulai masuk meski candle tetap hijau.
+    <br><br>
+    Cara membaca close speed di chart biasa: Perhatikan <em>posisi close relatif terhadap shadow atas</em>. Semakin kecil upper shadow = semakin cepat close terjadi = momentum lebih kuat. Tapi upper shadow NOLPUN bisa berarti exhaustion jika candle terlalu besar.
+  </div>
+</div>
+
+<div class="sect-rule"><div class="sr-l"></div><div class="sr-d"></div><div class="sr-t">Keempat Zona Secara Mendalam</div><div class="sr-d"></div><div class="sr-r"></div></div>
+
+<p class="p"><strong>Upper Shadow</strong> bukan sekadar "penolakan." Ia adalah rekaman dari <em>pertempuran gagal</em> — harga naik ke level tertentu, bertemu dengan penjual yang jauh lebih kuat, dan dipaksa mundur sebelum periode berakhir. Semakin panjang upper shadow relatif terhadap body, semakin banyak energi yang terbuang di atas.</p>
+
+<p class="p"><strong>Body</strong> adalah ringkasan final dari pertempuran selama satu periode: dari mana dimulai (open) dan di mana berakhir (close). Body TIDAK menceritakan perjalanan — ia hanya menceritakan <em>hasil akhir</em>. Dua candle dengan body identik bisa memiliki perjalanan yang sama sekali berbeda di dalamnya.</p>
+
+<p class="p"><strong>Lower Shadow</strong> adalah rekaman dari serangan yang gagal dari sisi penjual (atau buyer yang berusaha menguji level bawah). Dalam konteks gold, lower shadow panjang di support = buyer agresif yang langsung mempertahankan level tersebut.</p>
+
+<div class="secret">
+  <div class="secret-body">
+    <strong>Teknik "Ghost Body"</strong> — Tidak Diajarkan Di Manapun:<br><br>
+    Untuk setiap candle reversal yang Anda temukan, gambarlah secara mental di mana body candle itu <em>seharusnya berada</em> jika tren berlanjut tanpa hambatan. Jarak antara "ghost body" ini dengan body aktual = <em>Reversal Force Score</em>.<br><br>
+    Contoh: Setelah 5 candle bearish rata-rata bergerak turun 20 pip per candle, "ghost body" candle ke-6 seharusnya berada 20 pip di bawah candle ke-5. Jika candle ke-6 justru berhenti 5 pip di bawah = reversal force lemah. Jika candle ke-6 naik 15 pip = reversal force sangat kuat (35 pip dari ekspektasi).<br><br>
+    <em>Semakin besar penyimpangan dari ghost body, semakin kuat reversal yang akan datang.</em>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ BAB 2: BODY INTELLIGENCE ═══════════════════════════ -->
+<div class="chapter-sep">
+  <div class="chapter-eyebrow">// Bab Kedua</div>
+  <div class="chapter-number">II</div>
+  <div class="chapter-title">Body Intelligence —<br><em>Conviction Score</em> dan Ilmu Rasio</div>
+  <div class="chapter-subtitle">Membaca keyakinan pasar dari proporsi, bukan arah</div>
+</div>
+
+<p class="p">Body Candle bukan hanya warna. Ia adalah instrumen pengukur <em>keyakinan</em>. Seberapa yakin buyer atau seller terhadap posisinya tercermin persis dalam satu metrik: <em>Body-to-Range Ratio (BTR)</em> — persentase body terhadap total range candle.</p>
+
+<div class="chart-wrap">
+  <div class="chart-label">
+    <span class="chart-fig">Gambar 2.1</span>
+    <span class="chart-title-text">Spektrum BTR — Tujuh Level Keyakinan Pasar</span>
+  </div>
+  <div class="chart-svg-wrap" id="chart-btr"></div>
+  <div class="chart-caption">Tujuh candle dengan range identik tapi BTR berbeda. Dari kiri: Doji murni (0%) → Keyakinan eksplosif (95%). Warna bergantian antara bullish (emas) dan bearish (merah).</div>
+</div>
+
+<table class="score-table">
+  <thead><tr><th>BTR %</th><th>Nama Level</th><th>Makna</th><th>Implication</th></tr></thead>
+  <tbody>
+    <tr><td><strong>0–5%</strong></td><td>Doji / Pure Indecision</td><td>Kekuatan seimbang sempurna, tidak ada yang menang</td><td>Tunggu arah. Candle berikutnya menentukan semua.</td></tr>
+    <tr><td><strong>5–20%</strong></td><td>Micro Body</td><td>Keyakinan sangat lemah. Satu sisi sedikit unggul tapi bisa dengan mudah berbalik</td><td>Jangan follow. Bisa reversal kapan saja.</td></tr>
+    <tr><td><strong>20–40%</strong></td><td>Small Body</td><td>Keyakinan sedang. Satu sisi mengontrol tapi belum dominan</td><td>Perlu konfirmasi candle berikutnya sebelum entry.</td></tr>
+    <tr><td><strong>40–60%</strong></td><td>Medium Body</td><td>Keyakinan solid. Satu sisi jelas mengontrol akhir periode</td><td>Setup yang baik — cari entry di konfirmasi.</td></tr>
+    <tr><td><strong>60–80%</strong></td><td>Large Body</td><td>Keyakinan kuat. Tekanan searah yang konsisten</td><td>Momentum aktif. Ikuti arah dengan konfidence.</td></tr>
+    <tr><td><strong>80–92%</strong></td><td>Very Large Body</td><td>Keyakinan sangat kuat. Hampir tidak ada oposisi</td><td>Tren kuat. Tapi mulai antisipasi exhaustion.</td></tr>
+    <tr><td><strong>92–100%</strong></td><td>Full / Marubozu</td><td>AMBIGU — bisa genuine strength ATAU exhaustion extrem</td><td>Baca konteks! Full body setelah tren = topping. Di awal tren = breakout.</td></tr>
+  </tbody>
+</table>
+
+<div class="secret">
+  <div class="secret-body">
+    <strong>Relative Momentum Score (RMS) — Teknik Yang Tidak Ada Di Buku Manapun:</strong><br><br>
+    BTR absolut tidak cukup. Yang lebih penting adalah BTR <em>relatif terhadap rata-rata tiga candle sebelumnya</em>.<br><br>
+    Formula: <em>RMS = BTR candle saat ini / rata-rata BTR tiga candle sebelumnya</em><br><br>
+    • RMS > 2.5: Institusi baru saja masuk. Ini bukan retail — ukurannya terlalu besar. Ikuti.<br>
+    • RMS 1.2–2.5: Momentum normal yang valid. Follow dengan konfirmasi.<br>
+    • RMS 0.5–1.2: Momentum stagnan. Pasar sedang ragu-ragu.<br>
+    • RMS < 0.5: <em>Compression sebelum ledakan.</em> Ini adalah setup pre-breakout terbaik. Pasang alert — candle besar akan segera datang.
+  </div>
+</div>
+
+<div class="chart-wrap">
+  <div class="chart-label">
+    <span class="chart-fig">Gambar 2.2</span>
+    <span class="chart-title-text">RMS dalam Aksi — Momentum Squeeze Sebelum Ledakan</span>
+  </div>
+  <div class="chart-svg-wrap" id="chart-rms"></div>
+  <div class="chart-caption">Candle 1–5: body mengecil (RMS turun ke 0.3). Candle 6: ledakan. Candle 7–9: kelanjutan. Ini adalah pola yang berulang setiap hari di gold.</div>
+</div>
+
+<div class="sect-rule"><div class="sr-l"></div><div class="sr-d"></div><div class="sr-t">Body Position Analysis</div><div class="sr-d"></div><div class="sr-r"></div></div>
+
+<p class="p">Dimensi tersembunyi lainnya: <em>posisi close dalam range candle total</em>. Close di 80% range dari low = buyer kuat. Close di 30% range dari low = bearish meski candle hijau.</p>
+
+<div class="insight">
+  <div class="insight-title">The One-Third Rule — Mengabaikan Warna, Membaca Posisi</div>
+  <div class="insight-body">
+    Bagi range setiap candle menjadi tiga zona:<br><br>
+    <strong>Upper Third (67–100% dari low):</strong> Close di zona ini = buyer menang sepenuhnya, regardless warna candle. Bahkan candle bearish yang close di upper third masih bearish-lemah.<br><br>
+    <strong>Middle Third (33–67%):</strong> Pertempuran tidak ada yang menang. Kedua sisi masih aktif. Jangan buat keputusan berdasarkan candle ini saja.<br><br>
+    <strong>Lower Third (0–33% dari low):</strong> Seller menang sepenuhnya. Bahkan candle bullish yang close di lower third = bullish palsu. Seller sudah mengontrol akhir periode.<br><br>
+    <em>Test ini lebih akurat daripada warna candle dalam 70% kasus.</em>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ BAB 3: SHADOW INTELLIGENCE ═══════════════════════════ -->
+<div class="chapter-sep">
+  <div class="chapter-eyebrow">// Bab Ketiga</div>
+  <div class="chapter-number">III</div>
+  <div class="chapter-title">Shadow Intelligence —<br><em>Forensik Penolakan</em> dan Presisi Order</div>
+  <div class="chapter-subtitle">Membaca ketajaman wick untuk mendeteksi level institusional</div>
+</div>
+
+<p class="p">Shadow bukan sekedar "penolakan." Shadow adalah <em>sidik jari</em> dari apa yang terjadi di level ekstrem harga. Ada dua tipe shadow yang sama sekali berbeda, tapi hampir tidak pernah dibedakan dalam literatur trading manapun.</p>
+
+<div class="chart-wrap">
+  <div class="chart-label">
+    <span class="chart-fig">Gambar 3.1</span>
+    <span class="chart-title-text">Sharp Tip vs Blunt Tip Shadow — Dua Sinyal Berbeda</span>
+  </div>
+  <div class="chart-svg-wrap" id="chart-shadow"></div>
+  <div class="chart-caption">Kiri: Shadow dengan tip tajam (Sharp) = harga mencapai level spesifik dan SEGERA ditolak — menunjukkan order aktif di level tersebut. Kanan: Shadow dengan range lebar di ujung (Blunt) = harga "melayang" ke area tersebut tanpa penolakan spesifik.</div>
+</div>
+
+<div class="secret">
+  <div class="secret-body">
+    <strong>Sharp Tip vs Blunt Tip Theory — Teknik Forensik Yang Tidak Pernah Dipublikasikan:</strong><br><br>
+    <em>Shadow Tajam (Sharp Wick):</em> Ketika shadow berakhir di satu titik price yang sangat spesifik dan langsung berbalik — ini menunjukkan ada <strong>sell order limit atau buy stop yang tepat di level itu</strong>. Institusi memasang order di level spesifik. Harga menyentuh, terisi, berbalik. Tandai level tersebut — harga AKAN kembali ke sana lagi dan kembali bereaksi.<br><br>
+    <em>Shadow Tumpul (Blunt Wick):</em> Ketika shadow terlihat seperti "melayang" dengan beberapa pip sebelum membalik — tidak ada order spesifik di level itu. Ini hanya drift — harga tidak mendapat resistance/support terstruktur, hanya kehabisan momentum. Level ini TIDAK reliable untuk digunakan kembali.<br><br>
+    <em>Cara membedakan di chart:</em> Pada M5 atau M1, zoom in ke candle dengan shadow. Jika dalam 1–2 candle M1 harga langsung berbalik tajam dari titik ekstrem = sharp. Jika butuh 3–5 candle M1 untuk reversal = blunt.
+  </div>
+</div>
+
+<div class="sect-rule"><div class="sr-l"></div><div class="sr-d"></div><div class="sr-t">Multi-Shadow Consensus</div><div class="sr-d"></div><div class="sr-r"></div></div>
+
+<div class="chart-wrap">
+  <div class="chart-label">
+    <span class="chart-fig">Gambar 3.2</span>
+    <span class="chart-title-text">Multi-Shadow Consensus — Mapping Level Institusional</span>
+  </div>
+  <div class="chart-svg-wrap" id="chart-mshadow"></div>
+  <div class="chart-caption">Amati tipul-ujung shadow dari beberapa candle. Ketika 3+ candle memiliki shadow tips pada level yang sama (dalam ±3 pip), ini adalah institutional order cluster. Market maker memiliki limit order di level itu.</div>
+</div>
+
+<p class="p">Teknik <em>Shadow Constellation</em> adalah cara memetakan level-level institusional tanpa indikator apapun: ambil 15–20 candle M15 terakhir, catat semua level di mana shadow berakhir. Kelompokkan dalam cluster ±5 pip. Cluster terbanyak = level likuiditas terpenting.</p>
+
+<div class="insight">
+  <div class="insight-title">Shadow Asymmetry Ratio — Membaca Siapa yang Lebih Agresif</div>
+  <div class="insight-body">
+    Bandingkan panjang upper shadow vs lower shadow setiap candle.<br><br>
+    <strong>Ratio 3:1 (upper lebih panjang):</strong> Seller tiga kali lebih agresif daripada buyer di periode ini. Bias short untuk candle berikutnya kuat.<br><br>
+    <strong>Ratio 1:1 (sama panjang):</strong> Keseimbangan pertarungan. Tapi PERHATIKAN — ini bukan indecision biasa. Ini adalah tanda bahwa kedua sisi sama-sama memiliki keyakinan kuat. Potensi explosion besar.<br><br>
+    <strong>Ratio 1:5 (lower jauh lebih panjang):</strong> Seller sangat agresif menekan ke bawah, tapi buyer mempertahankan dengan kuat. Jika body-nya bullish = sangat bullish. Jika body-nya bearish = bearish lemah, mungkin segera reversal.
+  </div>
+</div>
+
+<!-- ═══════════════════════════ BAB 4: MEMORY CANDLE ═══════════════════════════ -->
+<div class="chapter-sep">
+  <div class="chapter-eyebrow">// Bab Keempat</div>
+  <div class="chapter-number">IV</div>
+  <div class="chapter-title">The Memory Candle System —<br><em>Posisi Open</em> Sebagai Signal Terkuat</div>
+  <div class="chapter-subtitle">Apa yang terjadi antara dua candle lebih penting dari candle itu sendiri</div>
+</div>
+
+<p class="p">Ada sinyal paling diabaikan di trading: <em>di mana candle berikutnya dibuka relatif terhadap body candle sebelumnya</em>. Dalam gold yang 24 jam, "gap intraday" hampir tidak terlihat — tapi micro-displacement antara close dan open berikutnya adalah salah satu signal paling informatif yang ada.</p>
+
+<div class="chart-wrap">
+  <div class="chart-label">
+    <span class="chart-fig">Gambar 4.1</span>
+    <span class="chart-title-text">Empat Skenario Open Position — Membaca "Dark Period"</span>
+  </div>
+  <div class="chart-svg-wrap" id="chart-memory"></div>
+  <div class="chart-caption">Empat pasang candle identik (candle 1 sama) dengan open candle ke-2 yang berbeda. Posisi open menentukan siapa yang mengontrol "dark period" antara dua candle.</div>
+</div>
+
+<div class="secret">
+  <div class="secret-body">
+    <strong>Membaca "Dark Period" di Gold — Konsep Yang Tidak Ada di Literatur Apapun:</strong><br><br>
+    Di gold 24 jam, harga bergerak secara kontinyu. Ketika candle M15 menutup dan M15 baru terbuka, tidak ada jeda. Tapi titik <em>di mana tepatnya new candle dibuka</em> mencerminkan state of market pada momen transisi itu:<br><br>
+    <strong>Open = Exact Close sebelumnya:</strong> Tidak ada perubahan kekuatan. Tren atau kondisi sebelumnya langsung berlanjut.<br><br>
+    <strong>Open &gt; Close sebelumnya (micro gap up):</strong> Dalam milli-second transisi, buyer mendorong harga lebih tinggi. Ini adalah tanda buyer <em>tidak sabar</em> — mereka terus beli bahkan di akhir period. <em>Sangat bullish.</em><br><br>
+    <strong>Open &lt; Close, tapi &gt; Open sebelumnya:</strong> Sedikit pullback dari sisi seller, tapi masih dalam territory net bullish. Normal dalam tren naik yang sehat.<br><br>
+    <strong>Open &lt; Open candle sebelumnya:</strong> Seluruh gain period sebelumnya dihapus dalam sekejap. Ini adalah <em>Full Retracement Signal</em> — struktur sudah berubah. Ini alarm besar yang diabaikan hampir semua trader.
+  </div>
+</div>
+
+<!-- ═══════════════════════════ BAB 5: SEQUENTIAL STORYTELLING ═══════════════════════════ -->
+<div class="chapter-sep">
+  <div class="chapter-eyebrow">// Bab Kelima</div>
+  <div class="chapter-number">V</div>
+  <div class="chapter-title">Sequential Candle Storytelling —<br>The <em>Seven-Candle Narrative</em></div>
+  <div class="chapter-subtitle">Setiap pergerakan signifikan gold memiliki tujuh babak yang dapat dibaca</div>
+</div>
+
+<p class="p">Pergerakan besar di gold bukan terjadi tiba-tiba. Ia memiliki <em>narasi yang selalu mengikuti pola tujuh candle</em>. Trader yang mampu membaca babak mana yang sedang terjadi memiliki keunggulan temporal yang luar biasa — mereka tahu apakah mereka di tengah tren, mendekati puncak, atau sudah di fase reversal.</p>
+
+<div class="chart-wrap">
+  <div class="chart-label">
+    <span class="chart-fig">Gambar 5.1</span>
+    <span class="chart-title-text">The Seven-Candle Narrative — Struktur Lengkap Sebuah Pergerakan</span>
+  </div>
+  <div class="chart-svg-wrap" id="chart-narrative"></div>
+  <div class="chart-caption">Tujuh babak pergerakan bearish di gold: Herald (sinyal) → Commitment (konfirmasi) → Acceleration (percepatan) → Peak (puncak kecepatan) → Whisper (kelelahan) → Battle (perlawanan) → Verdict (keputusan arah baru).</div>
+</div>
+
+<table class="score-table">
+  <thead><tr><th>Babak</th><th>Karakter Candle</th><th>Makna</th><th>Tindakan Trader</th></tr></thead>
+  <tbody>
+    <tr><td><strong>1. Herald</strong></td><td>Candle kecil, arah berlawanan dari tren sebelumnya. BTR 15–30%.</td><td>Petanda pertama bahwa sesuatu sedang berubah. Kebanyakan orang tidak melihat ini.</td><td>Siapkan alert. Jangan entry dulu.</td></tr>
+    <tr><td><strong>2. Commitment</strong></td><td>Candle medium-large, BTR 45–65%, arah gerakan baru.</td><td>Konfirmasi bahwa arah baru dimulai. Uang besar mulai masuk.</td><td>Entry pertama dengan posisi kecil (25% ukuran).</td></tr>
+    <tr><td><strong>3. Acceleration</strong></td><td>Candle lebih besar dari Commitment. RMS &gt; 1.5.</td><td>Momentum membangun. Institusi tambah posisi.</td><td>Tambah posisi (50% ukuran). Naikkan confidence.</td></tr>
+    <tr><td><strong>4. Peak Speed</strong></td><td>Candle TERBESAR dalam sequence. BTR 70–90%.</td><td>Puncak kecepatan. Ini adalah momen paling "dramatis" tapi juga paling BERBAHAYA untuk entry baru.</td><td>Exit sebagian (30%). Ini bukan entry — ini adalah exit zone.</td></tr>
+    <tr><td><strong>5. Whisper</strong></td><td>Candle kecil, arah sama, BTR &lt; 30%. RMS &lt; 0.4.</td><td>Kelelahan mulai. Pihak yang menang kehabisan amunisi. Pihak yang kalah mulai mengumpulkan kekuatan.</td><td>Exit sebagian besar (total 70% keluar).</td></tr>
+    <tr><td><strong>6. Battle</strong></td><td>Candle warna berlawanan, BTR 20–40%.</td><td>Pihak yang sebelumnya kalah menyerang balik. Tapi belum cukup kuat untuk konfirmasi reversal.</td><td>Persiapkan entry reversal. Belum eksekusi.</td></tr>
+    <tr><td><strong>7. Verdict</strong></td><td>Candle besar, warna berlawanan dari tren. BTR &gt; 50%.</td><td>Keputusan final. Jika besar dan kuat = reversal confirmed. Jika kecil = koreksi sementara.</td><td>Entry reversal penuh jika Verdict candle kuat.</td></tr>
+  </tbody>
+</table>
+
+<div class="chart-wrap">
+  <div class="chart-label">
+    <span class="chart-fig">Gambar 5.2</span>
+    <span class="chart-title-text">Cascading Exhaustion — Body yang Mengecil Sebagai Death Notice</span>
+  </div>
+  <div class="chart-svg-wrap" id="chart-exhaust"></div>
+  <div class="chart-caption">Cascading Exhaustion: body bearish mengecil secara konsisten (100→70→45→25→12 pip). Setiap candle bearish LEBIH KECIL dari sebelumnya meski harga terus turun = seller kelelahan. Reversal atau pause besar hampir pasti terjadi dalam 1–2 candle berikutnya.</div>
+</div>
+
+<div class="secret">
+  <div class="secret-body">
+    <strong>The "Candle Rhythm" Fibonacci Rule:</strong><br><br>
+    Gold secara alami membentuk tren dalam pola Fibonacci: 3, 5, atau 8 candle berturutan sebelum koreksi. Ketika Anda berada di candle ke-4 atau ke-6 dalam satu arah tanpa koreksi sama sekali = warning. Ketika mencapai candle ke-9 atau ke-13 tanpa koreksi = <em>highly unusual</em>, kemungkinan besar ada event fundamental yang driving it, bukan technical momentum biasa.<br><br>
+    <em>Ritme yang terganggu (candle ke-4 atau ke-6 mendadak jauh lebih kecil dari sebelumnya) = institusi mulai mengambil profit. Ini adalah sinyal diam-diam yang mendahului reversal 15–30 menit.</em>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ BAB 6: INSTITUTIONAL FINGERPRINT ═══════════════════════════ -->
+<div class="chapter-sep">
+  <div class="chapter-eyebrow">// Bab Keenam</div>
+  <div class="chapter-number">VI</div>
+  <div class="chapter-title">Lima Candle<br><em>Sidik Jari Institusional</em></div>
+  <div class="chapter-subtitle">Candle yang hanya bisa dibuat oleh uang besar — dan cara mengidentifikasinya</div>
+</div>
+
+<p class="p">Ada lima jenis candle yang tidak bisa dibuat oleh trader retail. Ukurannya, kecepatannya, dan posisinya mengkhianati kehadiran institusi. Memahami kelima candle ini adalah perbedaan antara mengikuti uang besar dan menjadi korbannya.</p>
+
+<div class="chart-wrap">
+  <div class="chart-label">
+    <span class="chart-fig">Gambar 6.1</span>
+    <span class="chart-title-text">Lima Candle Sidik Jari Institusional</span>
+  </div>
+  <div class="chart-svg-wrap" id="chart-institutional"></div>
+  <div class="chart-caption">Dari kiri: (1) Sweep & Reverse, (2) Absorption, (3) Whisper Accumulation [3 candle], (4) Distribute & Go, (5) Compression Spike. Masing-masing memiliki karakter unik.</div>
+</div>
+
+<div class="g2">
+  <div class="cell">
+    <div class="cell-h a">① The Sweep-and-Reverse</div>
+    <div class="cell-body">
+      Wick <em>menembus level penting</em> (stop loss area), lalu body close kuat di arah berlawanan — semuanya dalam <strong>satu candle</strong>. Retail yang dipasang stop di level itu sudah kena, institusi yang sudah persiapkan limit order di bawah/atas mengumpulkan posisi mereka.<br><br>
+      <strong>Ciri khas:</strong> Shadow sangat tajam, menembus level yang jelas (swing high/low), body besar dan penuh. Tidak ada body pada shadow — transisi langsung.
+    </div>
+  </div>
+  <div class="cell">
+    <div class="cell-h r">② The Absorption Candle</div>
+    <div class="cell-body">
+      Candle besar bearish (misalnya) yang <em>seharusnya melanjutkan penurunan</em> — tapi close-nya tidak membuat low baru yang signifikan. Buyer menyerap semua tekanan jual tanpa pasar tahu. Candle berikutnya: reversal tiba-tiba dan kuat.<br><br>
+      <strong>Ciri khas:</strong> Body besar, BTR tinggi, tapi gagal membuat struktur baru. Lower shadow lebih panjang dari biasanya. RMS tinggi tapi tidak ada follow-through.
+    </div>
+  </div>
+  <div class="cell">
+    <div class="cell-h g">③ Whisper Accumulation</div>
+    <div class="cell-body">
+      Serangkaian 5–8 candle bullish <em>sangat kecil</em> (body 5–12 pip) yang <strong>tidak pernah pullback</strong>. Tidak ada candle bearish di antara mereka. Ini mustahil dilakukan retail secara konsisten — ini adalah institusi yang membeli secara disiplin di setiap tick naik.<br><br>
+      <strong>Tanda khas:</strong> BTR rendah (15–30%) tapi konsisten, tidak ada koreksi, shadow minimal di semua candle. Setelah 6+ candle seperti ini: ledakan besar akan datang.
+    </div>
+  </div>
+  <div class="cell">
+    <div class="cell-h r">④ Distribute & Go</div>
+    <div class="cell-body">
+      Candle membuat high baru (menjebak buyer yang menunggu breakout), tapi close-nya <em>mendekati open</em> — menciptakan upper shadow sangat panjang dengan body kecil atau bearish. Distribusi selesai dalam satu candle.<br><br>
+      <strong>Ciri khas:</strong> Shadow atas ≥3x body, close di lower 40% range, sering terjadi setelah 3+ candle bullish berturutan. Ini adalah candle yang paling sering menipu retail.
+    </div>
+  </div>
+</div>
+
+<div class="insight">
+  <div class="insight-title">⑤ The Compression Spike — Yang Paling Jarang Terlihat, Paling Powerful</div>
+  <div class="insight-body">
+    Candle dengan range sangat kecil (<em>lebih kecil dari Doji normal</em>) tapi memiliki shadow atas dan bawah yang <strong>hampir sama panjang dan simetris</strong>. Ini bukan doji — ini adalah candle di mana kedua sisi memiliki kekuatan identik dan sama-sama tidak mau menyerah.<br><br>
+    <strong>Apa yang terjadi:</strong> Institusi dari kedua sisi sama-sama memiliki order di level yang sangat berdekatan. Tidak ada yang menang. Tekanan membangun seperti per yang dikompres dari dua arah.<br><br>
+    <strong>Apa yang terjadi setelah ini:</strong> Dalam 1–3 candle berikutnya, salah satu sisi menyerah dan harga meledak ke arah lawannya. Move-nya biasanya 2–3x range normal candle.<br><br>
+    <em>Cara trade: Siapkan dua pending order (buy stop dan sell stop) di luar range compression spike. Cancel yang satu ketika yang lain triggered.</em>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ BAB 7: TRAP CANDLE TAXONOMY ═══════════════════════════ -->
+<div class="chapter-sep">
+  <div class="chapter-eyebrow">// Bab Ketujuh</div>
+  <div class="chapter-number">VII</div>
+  <div class="chapter-title">Tujuh Jenis<br><em>Trap Candle</em> di Gold</div>
+  <div class="chapter-subtitle">Candle yang dirancang untuk menipu — dan cara menghindarinya</div>
+</div>
+
+<p class="p">Ini adalah babak yang paling "berbahaya" untuk diabaikan. Trap candle adalah candle yang <em>terlihat seperti sinyal yang valid</em> tapi sebenarnya adalah jebakan yang menarget stop loss dan posisi retail. Mengenali ketujuh jenis ini adalah perbedaan antara profit dan drawdown kronis.</p>
+
+<div class="chart-wrap">
+  <div class="chart-label">
+    <span class="chart-fig">Gambar 7.1</span>
+    <span class="chart-title-text">Tujuh Trap Candle — Taksonomi Lengkap</span>
+  </div>
+  <div class="chart-svg-wrap" id="chart-traps"></div>
+  <div class="chart-caption">Tujuh trap candle utama di gold. Setiap satu dirancang untuk menipu trader berbeda — dari trap untuk buyer, seller, breakout trader, hingga reversal trader.</div>
+</div>
+
+<table class="score-table">
+  <thead><tr><th>#</th><th>Nama</th><th>Penampilan</th><th>Mengapa Trader Tertipu</th><th>Reality</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>1</strong></td>
+      <td>Bull Trap Engulfing</td>
+      <td>Bullish engulfing besar di resistance, BTR 85–95%</td>
+      <td>Trader melihat "engulfing kuat = entry long"</td>
+      <td>Body terlalu besar = exhaustion. Close tepat di resistance, belum menembus. Candle berikutnya gagal.</td>
+    </tr>
+    <tr>
+      <td><strong>2</strong></td>
+      <td>Hammer Semu</td>
+      <td>Lower shadow ≥4x body di support level</td>
+      <td>Textbook mengajarkan shadow panjang = buying</td>
+      <td>Shadow setinggi itu = seller menjual SANGAT agresif, buyer hanya menahan. Tidak ada fresh buying — hanya defense. Bisa break ke bawah pada candle berikutnya.</td>
+    </tr>
+    <tr>
+      <td><strong>3</strong></td>
+      <td>False Retest Bounce</td>
+      <td>Candle "bounce" di level retest setelah break</td>
+      <td>Trader melihat "retest berhasil = entry safe"</td>
+      <td>Body bounce candle sepenuhnya di dalam range breakdown candle = tidak ada conviction. Harga masih dalam distribusi.</td>
+    </tr>
+    <tr>
+      <td><strong>4</strong></td>
+      <td>Exhaustion Breakout</td>
+      <td>Breakout candle raksasa, BTR &gt;88%, gap dari range sebelumnya</td>
+      <td>Trader melihat "breakout kuat = follow"</td>
+      <td>Candle terlalu besar = spike yang akan segera dikembalikan. True breakouts punya BTR 55–75%, bukan 90%+.</td>
+    </tr>
+    <tr>
+      <td><strong>5</strong></td>
+      <td>Graveyard Series</td>
+      <td>3+ candle hijau berturutan, setiap close LEBIH RENDAH dalam range dari candle sebelumnya</td>
+      <td>Trader melihat "tren naik berkelanjutan"</td>
+      <td>Meski harga naik, seller mengambil kontrol semakin besar tiap candle. Distribusi tersembunyi sedang terjadi.</td>
+    </tr>
+    <tr>
+      <td><strong>6</strong></td>
+      <td>Inside Body Trap</td>
+      <td>Tiga candle di mana setiap BODY berikutnya ada di dalam body sebelumnya</td>
+      <td>Trader melihat "konsolidasi = siap breakout ke atas/bawah"</td>
+      <td>Arah breakout hampir tidak bisa diprediksi dalam pola ini. Entry sebelum breakout = gambling. Tunggu sampai breakout terjadi.</td>
+    </tr>
+    <tr>
+      <td><strong>7</strong></td>
+      <td>Shadow Flip</td>
+      <td>Candle bearish dengan lower shadow panjang</td>
+      <td>Trader melihat lower shadow panjang = buying pressure = buy signal</td>
+      <td>Lower shadow panjang PADA candle bearish = seller menang periode ini meski ada tekanan beli di bawah. Body masih merah. Seller masih mengontrol.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="secret">
+  <div class="secret-body">
+    <strong>Universal Trap Filter — Satu Pertanyaan Yang Menghilangkan 80% False Signals:</strong><br><br>
+    Sebelum masuk trade berdasarkan candle apapun, tanyakan: <em>"Jika saya masuk sekarang, di mana stop loss saya?"</em> Kemudian tanyakan: <em>"Apakah level stop loss saya adalah level yang JUGA menarik bagi institusi untuk di-hunt?"</em><br><br>
+    Jika stop loss Anda akan berada tepat di swing high/low yang obvious, di round number (2600.00, 2650.00), atau di bawah shadow yang terlihat semua orang — <strong>institusi sudah mengincar level Anda sebagai target likuiditas.</strong> Geser stop loss 8–12 pip melewati level yang obvious tersebut, atau jangan masuk sama sekali.
+  </div>
+</div>
+
+<!-- ═══════════════════════════ BAB 8: BODY MIGRATION ═══════════════════════════ -->
+<div class="chapter-sep">
+  <div class="chapter-eyebrow">// Bab Kedelapan</div>
+  <div class="chapter-number">VIII</div>
+  <div class="chapter-title">Body Migration Pattern —<br><em>Distribusi dan Akumulasi</em> Tersembunyi</div>
+  <div class="chapter-subtitle">Melacak perpindahan body untuk membaca niat pasar yang disembunyikan dari harga</div>
+</div>
+
+<p class="p">Ini adalah teknik yang paling jarang diajarkan dalam trading candle. Bukan karena tidak berfungsi — justru sebaliknya, karena terlalu efektif dan terlalu sedikit orang yang tahu cara membacanya.</p>
+
+<p class="p"><em>Body Migration</em> adalah analisis perpindahan posisi body dalam range candle secara berurutan selama 5–15 candle. Bukan melihat harga naik atau turun — tapi melihat <em>di bagian mana dari range setiap candle, body-nya berada</em>.</p>
+
+<div class="chart-wrap">
+  <div class="chart-label">
+    <span class="chart-fig">Gambar 8.1</span>
+    <span class="chart-title-text">Body Migration — Distribusi Tersembunyi Sebelum Drop Besar</span>
+  </div>
+  <div class="chart-svg-wrap" id="chart-migration"></div>
+  <div class="chart-caption">Harga tampak bergerak sideways-naik tipis. Tapi amati posisi body dalam range setiap candle: bergerak dari upper-third ke middle, lalu ke lower-third. Distribusi sudah 70% selesai sebelum harga benar-benar drop.</div>
+</div>
+
+<div class="insight">
+  <div class="insight-title">Cara Membaca Body Migration Secara Sistematis</div>
+  <div class="insight-body">
+    Untuk setiap candle, hitung <em>Body Position Score (BPS)</em>:<br><br>
+    BPS = (Close − Low) / (High − Low) × 100<br><br>
+    Score 0 = body ada di level terendah range. Score 100 = body ada di level tertinggi range.<br><br>
+    <strong>Ambil rata-rata BPS untuk setiap candle dalam sequence 10 candle:</strong><br>
+    • BPS turun dari &gt;70 menjadi &lt;40 selama 10 candle meski harga flat/naik = <em>distribusi tersembunyi aktif</em>.<br>
+    • BPS naik dari &lt;30 menjadi &gt;60 selama 8–10 candle meski harga flat/turun = <em>akumulasi tersembunyi aktif</em>.<br><br>
+    <em>Kecepatan migrasi juga penting: migrasi cepat (5–6 candle) = keputusan institusi sudah dibuat dan move akan segera terjadi. Migrasi lambat (10+ candle) = akumulasi/distribusi jangka panjang dengan move yang lebih besar.</em>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ BAB 9: NESTED PATTERN ═══════════════════════════ -->
+<div class="chapter-sep">
+  <div class="chapter-eyebrow">// Bab Kesembilan</div>
+  <div class="chapter-number">IX</div>
+  <div class="chapter-title">Nested Candle Analysis —<br><em>DNA dalam DNA</em></div>
+  <div class="chapter-subtitle">Setiap candle M15 berisi cerita 15 candle M1 — inilah cara membacanya</div>
+</div>
+
+<p class="p">Ini adalah konsep paling advance dalam buku ini. Setiap candle M15 dibentuk oleh tepat 15 candle M1. Dua candle M15 yang terlihat <em>identik</em> dari luar bisa memiliki cerita M1 yang sama sekali berbeda — dan cerita M1 itu menentukan apa yang akan terjadi selanjutnya.</p>
+
+<div class="chart-wrap">
+  <div class="chart-label">
+    <span class="chart-fig">Gambar 9.1</span>
+    <span class="chart-title-text">Nested Analysis — Dua Candle Identik, Dua Cerita Berbeda</span>
+  </div>
+  <div class="chart-svg-wrap" id="chart-nested"></div>
+  <div class="chart-caption">Atas: Candle M15 bullish terbentuk dari 5 candle M1 bullish berturutan (genuine momentum). Bawah: Candle M15 bullish identik terbentuk dari 3 bearish M1 + 2 bull besar di akhir (forced close). Implikasi sangat berbeda.</div>
+</div>
+
+<div class="secret">
+  <div class="secret-body">
+    <strong>Cara Membaca "Formation Story" Candle M15/M5:</strong><br><br>
+    Buka M1 chart sambil menunggu M5 atau M15 candle selesai. Perhatikan bagaimana candle tersebut terbentuk:<br><br>
+    <em>Pattern A — "Staircase Formation":</em> Setiap M1 naik secara bertahap, tidak ada pullback, shadow minimal. = Genuine institutional buying. M15 candle yang terbentuk akan sangat kuat dan kemungkinan besar berlanjut.<br><br>
+    <em>Pattern B — "End Rush Formation":</em> Candle M1 flat/negatif selama 10 menit pertama, lalu tiba-tiba 5 candle M1 besar di akhir period membuat close tinggi. = Artificial push di akhir period. Kemungkinan besar ini adalah positioning untuk fix atau opsi expiry. Bukan genuine momentum. Reversal sangat mungkin.<br><br>
+    <em>Pattern C — "Battle Formation":</em> Candle M1 bergantian merah-hijau sepanjang period. = Pertempuran genuine, tidak ada yang dominan. M15 candle apapun yang terbentuk dari ini = tidak reliable untuk prediksi arah.<br><br>
+    <em>Pattern D — "Early Win, Hold Formation":</em> Harga langsung naik kuat di 3–4 menit pertama, lalu datar/konsolidasi sampai close. = Buyer sangat kuat dan sudah menyelesaikan akuisisi mereka awal period. Ini adalah sinyal akumulasi selesai. Highly bullish.
+  </div>
+</div>
+
+<!-- ═══════════════════════════ BAB 10: GOLD SESSION ═══════════════════════════ -->
+<div class="chapter-sep">
+  <div class="chapter-eyebrow">// Bab Kesepuluh</div>
+  <div class="chapter-number">X</div>
+  <div class="chapter-title">Gold Session Candle Behavior —<br><em>Karakter yang Berubah Setiap Jam</em></div>
+  <div class="chapter-subtitle">Candle yang sama memiliki makna berbeda di jam berbeda</div>
+</div>
+
+<p class="p">Ini adalah keunikan mutlak gold: candle dengan karakteristik identik memiliki makna yang sama sekali berbeda tergantung pada <em>sesi mana candle itu terbentuk</em>. Membaca candle tanpa konteks sesi adalah membaca peta tanpa skala.</p>
+
+<div class="chart-wrap">
+  <div class="chart-label">
+    <span class="chart-fig">Gambar 10.1</span>
+    <span class="chart-title-text">Karakter Candle Per Sesi — Asia vs London vs NY</span>
+  </div>
+  <div class="chart-svg-wrap" id="chart-session"></div>
+  <div class="chart-caption">Tiga sesi utama dengan karakter candle yang berbeda. Asia: kecil dan ranging. London: directional dengan satu liquidity sweep. NY: volatile dan sering reversal dari London.</div>
+</div>
+
+<table class="score-table">
+  <thead><tr><th>Sesi (WIB)</th><th>Karakter Candle Dominan</th><th>Yang Tidak Diajarkan</th><th>Cara Membaca Berbeda</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Asia<br>02:00–09:00</strong></td>
+      <td>BTR rendah (10–30%), shadow proporsional, range sempit</td>
+      <td>Doji di sesi Asia TIDAK bermakna indecision — pasar memang tidak aktif. Jangan buat keputusan dari doji Asia.</td>
+      <td>Baca Asia sebagai "liquidity builder" — dimana high dan low Asia diset sebagai target untuk London untuk di-hunt.</td>
+    </tr>
+    <tr>
+      <td><strong>London<br>14:00–20:00</strong></td>
+      <td>1–2 candle besar di awal (sweep), lalu directional</td>
+      <td>Candle ke-1 dan ke-2 London sering PALSU — ini adalah sweep sesi Asia. Candle ke-3 adalah arah SEBENARNYA London.</td>
+      <td>Jangan entry di candle pertama London. Tunggu candle ke-3 untuk konfirmasi arah genuine London.</td>
+    </tr>
+    <tr>
+      <td><strong>NY<br>20:30–04:00</strong></td>
+      <td>Volatile, sering reversal dari London, ada "COMEX spike"</td>
+      <td>Candle pertama NY (COMEX open 20:30 WIB) adalah candle paling dimanipulasi di gold. Sering ada spike palsu di momen ini.</td>
+      <td>Jangan trade candle COMEX open itu sendiri. Tunggu 3–5 menit setelah open dan baca arah sesungguhnya dari small candles berikutnya.</td>
+    </tr>
+    <tr>
+      <td><strong>Dead Zone<br>11:00–14:00</strong></td>
+      <td>Sangat random, BTR tidak konsisten</td>
+      <td>Candle di dead zone tidak memiliki korelasi dengan apa yang terjadi setelahnya. Mereka adalah "white noise".</td>
+      <td>Jangan membuat kesimpulan dari candle di jam ini. Semua pattern yang terbentuk di sini memiliki win rate mendekati 50% — tidak lebih baik dari coin flip.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ═══════════════════════════ BAB 11: 12-DIMENSION SYSTEM ═══════════════════════════ -->
+<div class="chapter-sep">
+  <div class="chapter-eyebrow">// Sintesis Akhir</div>
+  <div class="chapter-number">XII</div>
+  <div class="chapter-title">The Twelve-Dimension<br><em>Candle Reading System</em></div>
+  <div class="chapter-subtitle">Mengintegrasikan semua dimensi menjadi satu skor keyakinan</div>
+</div>
+
+<p class="p">Semua dimensi yang telah dibahas dalam buku ini dapat digabungkan menjadi sebuah sistem skoring. Setiap candle setup mendapat score dari −24 hingga +24. Score di atas +12 = trade dengan keyakinan tinggi. Score di bawah −12 = hindari atau ambil posisi berlawanan.</p>
+
+<div class="chart-wrap">
+  <div class="chart-label">
+    <span class="chart-fig">Gambar 11.1</span>
+    <span class="chart-title-text">Demonstrasi: Setup Gold Lengkap Dengan 12-Dimension Score</span>
+  </div>
+  <div class="chart-svg-wrap" id="chart-synthesis"></div>
+  <div class="chart-caption">Setup entry long yang melewati 12 dimension filter. Amati: Compression → Institutional Whisper accumulation → Sweep low (trap bears) → Verdict candle kuat. Score: +18/24.</div>
+</div>
+
+<table class="score-table">
+  <thead><tr><th>Dimensi</th><th>Yang Dibaca</th><th>Bullish (+1/+2)</th><th>Bearish (−1/−2)</th></tr></thead>
+  <tbody>
+    <tr><td><strong>1. BTR</strong></td><td>Ukuran body vs range</td><td>40–80% BTR: +2</td><td>&lt;15% atau &gt;92%: −1</td></tr>
+    <tr><td><strong>2. Close Position</strong></td><td>1/3 Rule: posisi close dalam range</td><td>Upper 1/3: +2</td><td>Lower 1/3: −2</td></tr>
+    <tr><td><strong>3. Shadow Asymmetry</strong></td><td>Upper vs lower shadow ratio</td><td>Lower &gt;2x upper (bull): +1</td><td>Upper &gt;2x lower: −1</td></tr>
+    <tr><td><strong>4. Shadow Precision</strong></td><td>Sharp vs Blunt tip</td><td>Sharp tip di support: +2</td><td>Blunt tip: 0</td></tr>
+    <tr><td><strong>5. Memory (Open Position)</strong></td><td>Open vs previous body</td><td>Open &gt; prev close: +2</td><td>Open &lt; prev open: −2</td></tr>
+    <tr><td><strong>6. RMS (Relative Momentum)</strong></td><td>BTR vs avg 3 candle sebelumnya</td><td>RMS &gt; 2.0: +2</td><td>RMS &lt; 0.3: −1 (atau +2 jika compression)</td></tr>
+    <tr><td><strong>7. Body Migration</strong></td><td>Arah BPS 10 candle terakhir</td><td>BPS naik: +1</td><td>BPS turun: −1</td></tr>
+    <tr><td><strong>8. Narrative Position</strong></td><td>Babak ke berapa dalam 7-candle</td><td>Candle 2–3 (Commitment/Accel): +2</td><td>Candle 4–5 (Peak/Whisper): −1</td></tr>
+    <tr><td><strong>9. Institutional Pattern</strong></td><td>Apakah ada institutional fingerprint</td><td>Whisper/Sweep-Reverse: +2</td><td>Distribute & Go: −2</td></tr>
+    <tr><td><strong>10. Trap Filter</strong></td><td>Apakah ada trap candle signature</td><td>Tidak ada trap: +1</td><td>Ada trap signature: −2</td></tr>
+    <tr><td><strong>11. Session Context</strong></td><td>Sesi apa candle ini terbentuk</td><td>London candle ke-3+: +1</td><td>Dead zone / COMEX open: −1</td></tr>
+    <tr><td><strong>12. Nested Formation</strong></td><td>Bagaimana candle ini terbentuk di TF lebih kecil</td><td>Staircase/Early Win: +2</td><td>End Rush/Battle: −1</td></tr>
+  </tbody>
+</table>
+
+<div class="pull">
+  Score ≥ +14: Entry dengan confidence tinggi.<br>
+  Score +8 hingga +13: Entry dengan 50–70% normal size.<br>
+  Score +4 hingga +7: Tunda entry, tunggu konfirmasi tambahan.<br>
+  Score ≤ +3 atau negatif: Jangan masuk. Pasar tidak jelas.
+</div>
+
+<div class="chart-wrap">
+  <div class="chart-label">
+    <span class="chart-fig">Gambar 11.2</span>
+    <span class="chart-title-text">Contoh Nyata: 12-D Score Pada Setup Gold Yang Ideal</span>
+  </div>
+  <div class="chart-svg-wrap" id="chart-final"></div>
+  <div class="chart-caption">Setup ideal: Asian Range terbentuk → London sweep low (Sweep&amp;Reverse candle) → Whisper Accumulation 4 candle → Verdict candle bullish besar. Total 12-D Score: +19. Entry LONG dengan full confidence.</div>
+</div>
+
+<!-- FOOTER -->
+<div class="book-footer">
+  <div class="book-footer-title">Lexicon Aurum</div>
+  <div class="book-footer-text">
+    Dua Belas Dimensi · Sepuluh Bab · Satu Bahasa — Bahasa Candle Gold<br>
+    ──────────────────────────────────────────<br>
+    Baca berulang · Latih di demo · Terapkan satu dimensi per minggu<br>
+    Setiap candle adalah data. Setiap data adalah keunggulan.<br>
+    ──────────────────────────────────────────<br>
+    Not For Public Distribution · Restricted Trading Intelligence
+  </div>
+</div>
+
+</div><!-- end .page -->
+
+<!-- ═══════════════════════════ SVG CHART RENDERER ═══════════════════════════ -->
+<script>
+(function(){
+  // Core renderer
+  function mkSVG(candles, opts){
+    opts = opts||{};
+    var w=opts.w||740, h=opts.h||210, px=opts.px||8, py=opts.py||24;
+    var prices=candles.flatMap(function(c){return[c.h,c.l];});
+    var minP=Math.min.apply(null,prices), maxP=Math.max.apply(null,prices);
+    var range=maxP-minP; if(!range)range=1;
+    var rm=range*(opts.margin||0.14); minP-=rm; maxP+=rm; range=maxP-minP;
+    var cw=w-2*px, ch=h-2*py;
+    var slotW=cw/candles.length, bw=Math.max(4,Math.min(slotW*0.6,28));
+    var Y=function(p){return py+(maxP-p)/range*ch;};
+    var X=function(i){return px+(i+0.5)*slotW;};
+    var parts=[];
+    parts.push('<rect width="'+w+'" height="'+h+'" fill="#050610" rx="2"/>');
+    // grid
+    for(var i=1;i<5;i++){var gy=(py+i*ch/5).toFixed(1);parts.push('<line x1="'+px+'" y1="'+gy+'" x2="'+(w-px)+'" y2="'+gy+'" stroke="#111222" stroke-width="1"/>');}
+    // zones
+    (opts.zones||[]).forEach(function(z){
+      var y1=Y(z.top),y2=Y(z.bot);
+      parts.push('<rect x="'+px+'" y="'+y1.toFixed(1)+'" width="'+cw+'" height="'+(y2-y1).toFixed(1)+'" fill="'+(z.fill||'#c9a44b')+'" opacity="'+(z.op||0.09)+'"/>');
+      if(z.label)parts.push('<text x="'+(px+3)+'" y="'+((y1+y2)/2+4).toFixed(1)+'" font-family="Share Tech Mono,monospace" font-size="8" fill="'+(z.fill||'#c9a44b')+'" opacity="0.65">'+z.label+'</text>');
+    });
+    // hlines
+    (opts.hlines||[]).forEach(function(hl){
+      var hy=Y(hl.p).toFixed(1);
+      parts.push('<line x1="'+px+'" y1="'+hy+'" x2="'+(w-px)+'" y2="'+hy+'" stroke="'+(hl.c||'#2a2d4a')+'" stroke-width="'+(hl.w||1)+'" stroke-dasharray="'+(hl.d||'5,4')+'"/>');
+      if(hl.lbl)parts.push('<text x="'+(w-px-2)+'" y="'+(Y(hl.p)-4).toFixed(1)+'" text-anchor="end" font-family="Share Tech Mono,monospace" font-size="8" fill="'+(hl.c||'#4a4d6a')+'">'+hl.lbl+'</text>');
+    });
+    // candles
+    candles.forEach(function(cd,i){
+      var o=cd.o,hi=cd.h,lo=cd.l,c=cd.c;
+      var bull=cd.bull!==undefined?cd.bull:(c>=o);
+      var clr=bull?'#c9a44b':'#c54040';
+      if(cd.clr)clr=cd.clr;
+      var x=X(i).toFixed(1);
+      var yH=Y(hi).toFixed(1),yL=Y(lo).toFixed(1);
+      var bTop=Math.min(Y(o),Y(c)),bBot=Math.max(Y(o),Y(c)),bH=Math.max(bBot-bTop,1.5);
+      var isDoji=Math.abs(c-o)/range<0.007;
+      parts.push('<line x1="'+x+'" y1="'+yH+'" x2="'+x+'" y2="'+yL+'" stroke="'+clr+'" stroke-width="1.5" opacity="0.85"/>');
+      if(isDoji){parts.push('<line x1="'+(X(i)-bw/2).toFixed(1)+'" y1="'+Y(o).toFixed(1)+'" x2="'+(X(i)+bw/2).toFixed(1)+'" y2="'+Y(o).toFixed(1)+'" stroke="'+clr+'" stroke-width="2.5"/>');}
+      else{parts.push('<rect x="'+(X(i)-bw/2).toFixed(1)+'" y="'+bTop.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+bH.toFixed(1)+'" fill="'+clr+'" opacity="0.93" rx="1"/>');}
+      if(cd.lbl)parts.push('<text x="'+x+'" y="'+(h-5)+'" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="8" fill="#3a3d5a">'+cd.lbl+'</text>');
+      if(cd.note)parts.push('<text x="'+x+'" y="'+(Y(hi)-5).toFixed(1)+'" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="8" fill="'+(cd.nc||'#c9a44b')+'" opacity="0.85">'+cd.note+'</text>');
+    });
+    // annotations
+    (opts.ann||[]).forEach(function(a){
+      if(a.type==='text'){
+        var ax=a.ax!==undefined?a.ax:(px+a.rx*cw);
+        var ay=a.p!==undefined?Y(a.p):(a.ay||h/2);
+        parts.push('<text x="'+ax.toFixed(1)+'" y="'+ay.toFixed(1)+'" text-anchor="'+(a.ta||'middle')+'" font-family="Share Tech Mono,monospace" font-size="'+(a.fs||9)+'" fill="'+(a.fill||'#c9a44b')+'" opacity="'+(a.op||0.9)+'">'+a.text+'</text>');
+      }
+      if(a.type==='hline'){
+        var hy2=Y(a.p).toFixed(1);
+        parts.push('<line x1="'+(px+(a.x1||0)*cw)+'" y1="'+hy2+'" x2="'+(px+(a.x2||1)*cw)+'" y2="'+hy2+'" stroke="'+(a.fill||'#3a4060')+'" stroke-width="'+(a.w||1)+'" stroke-dasharray="'+(a.d||'5,4')+'"/>');
+        if(a.lbl)parts.push('<text x="'+(w-px-2)+'" y="'+(Y(a.p)-4).toFixed(1)+'" text-anchor="end" font-family="Share Tech Mono,monospace" font-size="8" fill="'+(a.fill||'#6a6d8a')+'">'+a.lbl+'</text>');
+      }
+      if(a.type==='bracket'){
+        var bx=(px+a.rx*cw).toFixed(1);
+        var by1=Y(a.top).toFixed(1),by2=Y(a.bot).toFixed(1);
+        var bc=a.c||'#c9a44b';
+        parts.push('<line x1="'+bx+'" y1="'+by1+'" x2="'+(parseFloat(bx)+7)+'" y2="'+by1+'" stroke="'+bc+'" stroke-width="1" opacity="0.5"/>');
+        parts.push('<line x1="'+bx+'" y1="'+by2+'" x2="'+(parseFloat(bx)+7)+'" y2="'+by2+'" stroke="'+bc+'" stroke-width="1" opacity="0.5"/>');
+        parts.push('<line x1="'+bx+'" y1="'+by1+'" x2="'+bx+'" y2="'+by2+'" stroke="'+bc+'" stroke-width="1" opacity="0.5"/>');
+        if(a.lbl)parts.push('<text x="'+(parseFloat(bx)+10)+'" y="'+(((parseFloat(by1)+parseFloat(by2))/2)+4).toFixed(1)+'" font-family="Share Tech Mono,monospace" font-size="8" fill="'+bc+'" opacity="0.7">'+a.lbl+'</text>');
+      }
+      if(a.type==='line'){
+        var ax1=(px+a.rx1*cw), ay1=a.p1!==undefined?Y(a.p1):a.ay1;
+        var ax2=(px+a.rx2*cw), ay2=a.p2!==undefined?Y(a.p2):a.ay2;
+        parts.push('<line x1="'+ax1.toFixed(1)+'" y1="'+ay1.toFixed(1)+'" x2="'+ax2.toFixed(1)+'" y2="'+ay2.toFixed(1)+'" stroke="'+(a.c||'#3a4060')+'" stroke-width="'+(a.w||1)+'" stroke-dasharray="'+(a.d||'4,3')+'"/>');
+      }
+      if(a.type==='rect'){
+        var ry1=Y(a.top),ry2=Y(a.bot);
+        var rx1=(px+a.rx1*cw),rx2=(px+a.rx2*cw);
+        parts.push('<rect x="'+rx1.toFixed(1)+'" y="'+ry1.toFixed(1)+'" width="'+(rx2-rx1).toFixed(1)+'" height="'+(ry2-ry1).toFixed(1)+'" fill="'+(a.fill||'#c9a44b')+'" opacity="'+(a.op||0.08)+'" rx="1"/>');
+      }
+    });
+    return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">'+parts.join('')+'</svg>';
+  }
+
+  function inject(id,svg){var el=document.getElementById(id);if(el)el.innerHTML=svg;}
+
+  // ── CHART 1: Anatomy (custom large SVG) ──
+  inject('chart-anatomy',(function(){
+    var w=740,h=340,xC=190,bw=72;
+    var py2=30,ph=270; // chart area
+    // O=1820,H=1858,L=1805,C=1848, min=1795,max=1870
+    var mn=1795,mx=1870,r=75,sc=ph/r;
+    var Y=function(p){return py2+(mx-p)*sc;};
+    var yH=Y(1858),yL=Y(1805),yO=Y(1820),yC=Y(1848);
+    var bTop=Math.min(yO,yC),bBot=Math.max(yO,yC),bH=bBot-bTop;
+    var p=[];
+    p.push('<rect width="'+w+'" height="'+h+'" fill="#050610" rx="2"/>');
+    // grid
+    for(var i=1;i<6;i++){var gy=(py2+i*ph/6).toFixed(1);p.push('<line x1="20" y1="'+gy+'" x2="290" y2="'+gy+'" stroke="#111222" stroke-width="1"/>');}
+    // wick
+    p.push('<line x1="'+xC+'" y1="'+yH.toFixed(1)+'" x2="'+xC+'" y2="'+yL.toFixed(1)+'" stroke="#c9a44b" stroke-width="2"/>');
+    // body
+    p.push('<rect x="'+(xC-bw/2).toFixed(1)+'" y="'+bTop.toFixed(1)+'" width="'+bw+'" height="'+bH.toFixed(1)+'" fill="#c9a44b" opacity="0.93" rx="1"/>');
+    // zone fills (left of candle)
+    var zoneX=20, zoneW=xC-bw/2-4;
+    // upper shadow zone
+    p.push('<rect x="'+zoneX+'" y="'+yH.toFixed(1)+'" width="'+zoneW+'" height="'+(bTop-yH).toFixed(1)+'" fill="#c9a44b" opacity="0.04" rx="1"/>');
+    // body zone
+    p.push('<rect x="'+zoneX+'" y="'+bTop.toFixed(1)+'" width="'+zoneW+'" height="'+bH.toFixed(1)+'" fill="#c9a44b" opacity="0.06" rx="1"/>');
+    // lower shadow zone
+    p.push('<rect x="'+zoneX+'" y="'+bBot.toFixed(1)+'" width="'+zoneW+'" height="'+(yL-bBot).toFixed(1)+'" fill="#c9a44b" opacity="0.04" rx="1"/>');
+    // labels right side
+    var lx=xC+bw/2+16;
+    var labelData=[
+      {y:yH,c:'#5090cc',txt:'HIGH 1858 — Titik tertinggi dicapai'},
+      {y:yC,c:'#c9a44b',txt:'CLOSE 1848 — Buyer menguasai akhir periode'},
+      {y:(yO+yC)/2,c:'#888',txt:'BODY MIDPOINT'},
+      {y:yO,c:'#c9a44b',txt:'OPEN 1820 — Pertempuran dimulai di sini'},
+      {y:yL,c:'#c54040',txt:'LOW 1805 — Seller ditolak di level ini'},
+    ];
+    labelData.forEach(function(ld){
+      p.push('<line x1="'+(xC+bw/2)+'" y1="'+ld.y.toFixed(1)+'" x2="'+(lx-4)+'" y2="'+ld.y.toFixed(1)+'" stroke="'+ld.c+'" stroke-width="0.7" opacity="0.5"/>');
+      p.push('<text x="'+lx+'" y="'+(ld.y+4).toFixed(1)+'" font-family="Share Tech Mono,monospace" font-size="9.5" fill="'+ld.c+'" opacity="0.85">'+ld.txt+'</text>');
+    });
+    // Brackets right (zone annotations)
+    var brkX=530;
+    var zones2=[
+      {top:yH,bot:bTop,c:'#c54040',lbl:'UPPER SHADOW — Seller mencoba, buyer menolak'},
+      {top:bTop,bot:(bTop+bBot)/2,c:'#c9a44b',lbl:'BODY UPPER — Zona dominasi buyer'},
+      {top:(bTop+bBot)/2,bot:bBot,c:'#ddb84a',lbl:'BODY LOWER — Zona transisi pertempuran'},
+      {top:bBot,bot:yL,c:'#3aaa82',lbl:'LOWER SHADOW — Buyer beli agresif di bawah'},
+    ];
+    zones2.forEach(function(z){
+      var z1=z.top.toFixed(1),z2=z.bot.toFixed(1);
+      p.push('<line x1="'+brkX+'" y1="'+z1+'" x2="'+(brkX+8)+'" y2="'+z1+'" stroke="'+z.c+'" stroke-width="1" opacity="0.45"/>');
+      p.push('<line x1="'+brkX+'" y1="'+z2+'" x2="'+(brkX+8)+'" y2="'+z2+'" stroke="'+z.c+'" stroke-width="1" opacity="0.45"/>');
+      p.push('<line x1="'+brkX+'" y1="'+z1+'" x2="'+brkX+'" y2="'+z2+'" stroke="'+z.c+'" stroke-width="1" opacity="0.45"/>');
+      p.push('<text x="'+(brkX+12)+'" y="'+(((parseFloat(z1)+parseFloat(z2))/2)+4).toFixed(1)+'" font-family="Share Tech Mono,monospace" font-size="8.5" fill="'+z.c+'" opacity="0.75">'+z.lbl+'</text>');
+    });
+    // 5th dimension annotation
+    p.push('<text x="30" y="18" font-family="Share Tech Mono,monospace" font-size="8" fill="#c9a44b" opacity="0.5">DIMENSI KE-5: Kecepatan close → posisi close di atas = buyer kuat sampai detik terakhir</text>');
+    return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">'+p.join('')+'</svg>';
+  })());
+
+  // ── CHART 2: BTR Spectrum ──
+  inject('chart-btr',(function(){
+    var defs=[
+      {o:49,c:51,h:95,l:5,lbl:'DOJI',note:'0%',nc:'#888',bull:true},
+      {o:42,c:57,h:93,l:7,lbl:'MICRO',note:'15%',bull:true},
+      {o:62,c:38,h:93,l:7,lbl:'SMALL',note:'24%',bull:false},
+      {o:32,c:68,h:93,l:7,lbl:'MEDIUM',note:'36%',bull:true},
+      {o:25,c:75,h:93,l:7,lbl:'LARGE',note:'50%',bull:false},
+      {o:15,c:83,h:93,l:7,lbl:'V.LARGE',note:'68%',bull:true},
+      {o:5,c:93,h:95,l:5,lbl:'FULL',note:'88%',bull:false},
+    ];
+    return mkSVG(defs,{w:740,h:210,margin:0.05});
+  })());
+
+  // ── CHART 3: RMS Compression → Explosion ──
+  inject('chart-rms',(function(){
+    var cs=[
+      {o:2040,h:2046,l:2033,c:2044,lbl:'C1'},
+      {o:2044,h:2048,l:2038,c:2046,lbl:'C2'},
+      {o:2046,h:2049,l:2041,c:2047,lbl:'C3',note:'RMS↓'},
+      {o:2047,h:2050,l:2043,c:2048,lbl:'C4'},
+      {o:2048,h:2051,l:2045,c:2049,lbl:'C5',note:'RMS=0.3'},
+      {o:2049,h:2078,l:2047,c:2075,lbl:'C6',note:'LEDAKAN!',nc:'#3aaa82'},
+      {o:2075,h:2088,l:2071,c:2084,lbl:'C7'},
+      {o:2084,h:2095,l:2080,c:2091,lbl:'C8'},
+      {o:2091,h:2098,l:2086,c:2094,lbl:'C9'},
+    ];
+    return mkSVG(cs,{w:740,h:210,
+      zones:[{top:2044,bot:2051,fill:'#888',op:0.06,label:'Compression Zone'}],
+      ann:[
+        {type:'text',rx:0.3,p:2040,text:'Body mengecil tiap candle',fill:'#6a6d8a',fs:8,ta:'middle'},
+        {type:'text',rx:0.7,p:2078,text:'RMS > 3.0 → Institutional Entry',fill:'#c9a44b',fs:8,ta:'middle'},
+      ]
+    });
+  })());
+
+  // ── CHART 4: Shadow Sharp vs Blunt ──
+  inject('chart-shadow',(function(){
+    // Left: sharp tip candles, Right: blunt tip candles
+    // Sharp: shadow ends at very precise price
+    // Blunt: shadow ends messily
+    var cs=[
+      // Sharp tip examples (left)
+      {o:2050,h:2070,l:2045,c:2048,lbl:'SHARP',note:'Tajam',nc:'#c9a44b',bull:false},
+      {o:2048,h:2049,l:2030,c:2044,lbl:'SHARP',note:'Tajam',nc:'#c9a44b',bull:false},
+      // separator gap (invisible)
+      {o:2050,h:2052,l:2048,c:2050,lbl:'',bull:true,clr:'#111222'},
+      // Blunt tip examples (right)
+      {o:2050,h:2066,l:2046,c:2048,lbl:'BLUNT',note:'Tumpul',nc:'#888',bull:false},
+      {o:2048,h:2049,l:2034,c:2043,lbl:'BLUNT',note:'Tumpul',nc:'#888',bull:false},
+    ];
+    return mkSVG(cs,{w:740,h:210,
+      ann:[
+        {type:'text',rx:0.15,p:2075,text:'Shadow tajam = Order spesifik institusi',fill:'#c9a44b',fs:8,ta:'middle'},
+        {type:'text',rx:0.78,p:2075,text:'Shadow tumpul = Drift, tidak ada order spesifik',fill:'#5a5d7a',fs:8,ta:'middle'},
+        {type:'hline',p:2070,fill:'#c9a44b',d:'2,2',w:1,x1:0,x2:0.38,lbl:'Order Level'},
+      ]
+    });
+  })());
+
+  // ── CHART 5: Multi-Shadow Consensus ──
+  inject('chart-mshadow',(function(){
+    var cs=[
+      {o:2060,h:2080,l:2055,c:2065,lbl:'C1'},
+      {o:2065,h:2083,l:2059,c:2070,lbl:'C2'},
+      {o:2070,h:2079,l:2062,c:2067,lbl:'C3'},
+      {o:2067,h:2081,l:2060,c:2072,lbl:'C4'},
+      {o:2072,h:2080,l:2065,c:2068,lbl:'C5'},
+      {o:2068,h:2082,l:2063,c:2075,lbl:'C6'},
+      {o:2075,h:2078,l:2060,c:2063,lbl:'C7'},
+      {o:2063,h:2095,l:2058,c:2090,lbl:'BREAK',note:'Absorb!',nc:'#3aaa82'},
+    ];
+    return mkSVG(cs,{w:740,h:210,
+      ann:[
+        {type:'hline',p:2080,fill:'#c9a44b',d:'3,2',w:1.5,x1:0,x2:0.9,lbl:'Shadow Cluster ≈ 2080'},
+        {type:'text',rx:0.5,p:2086,text:'5 candle dengan shadow tips di level sama → Institutional sell wall',fill:'#c9a44b',fs:8,ta:'middle'},
+        {type:'text',rx:0.96,p:2078,text:'Break!',fill:'#3aaa82',fs:9,ta:'middle'},
+      ]
+    });
+  })());
+
+  // ── CHART 6: Memory Candle (4 scenarios) ──
+  inject('chart-memory',(function(){
+    // 4 pairs: each has same "mother candle" then different "next candle open"
+    var cs=[
+      // Scenario A: open > prev close (gap up)
+      {o:2050,h:2065,l:2042,c:2060,lbl:'A-1'},
+      {o:2063,h:2078,l:2058,c:2074,lbl:'A-2',note:'Gap↑',nc:'#3aaa82'},
+      // gap
+      {o:2050,h:2051,l:2049,c:2050,clr:'#111222',lbl:''},
+      // Scenario B: open = close
+      {o:2050,h:2065,l:2042,c:2060,lbl:'B-1'},
+      {o:2060,h:2072,l:2055,c:2068,lbl:'B-2',note:'=Close',nc:'#c9a44b'},
+      // gap
+      {o:2050,h:2051,l:2049,c:2050,clr:'#111222',lbl:''},
+      // Scenario C: open < close but > open
+      {o:2050,h:2065,l:2042,c:2060,lbl:'C-1'},
+      {o:2055,h:2066,l:2050,c:2061,lbl:'C-2',note:'Pullback',nc:'#888'},
+      // gap
+      {o:2050,h:2051,l:2049,c:2050,clr:'#111222',lbl:''},
+      // Scenario D: open < prev open (full retrace)
+      {o:2050,h:2065,l:2042,c:2060,lbl:'D-1'},
+      {o:2044,h:2050,l:2038,c:2042,lbl:'D-2',note:'⚠FULL',nc:'#c54040',bull:false},
+    ];
+    return mkSVG(cs,{w:740,h:210,
+      ann:[
+        {type:'text',rx:0.09,p:2077,text:'A: Sangat Bullish',fill:'#3aaa82',fs:8,ta:'middle'},
+        {type:'text',rx:0.36,p:2077,text:'B: Lanjut Normal',fill:'#c9a44b',fs:8,ta:'middle'},
+        {type:'text',rx:0.64,p:2077,text:'C: Pullback Sehat',fill:'#888',fs:8,ta:'middle'},
+        {type:'text',rx:0.91,p:2077,text:'D: ⚠ Struktur Ganti',fill:'#c54040',fs:8,ta:'middle'},
+      ]
+    });
+  })());
+
+  // ── CHART 7: 7-Candle Narrative ──
+  inject('chart-narrative',(function(){
+    var cs=[
+      {o:2080,h:2084,l:2072,c:2075,lbl:'HERALD',note:'1',nc:'#888',bull:false},
+      {o:2075,h:2077,l:2060,c:2063,lbl:'COMMIT',note:'2',nc:'#c54040',bull:false},
+      {o:2063,h:2065,l:2046,c:2049,lbl:'ACCEL',note:'3',nc:'#c54040',bull:false},
+      {o:2049,h:2051,l:2025,c:2028,lbl:'PEAK',note:'4 MAX',nc:'#ff6060',bull:false},
+      {o:2028,h:2030,l:2019,c:2022,lbl:'WHISPER',note:'5',nc:'#888',bull:false},
+      {o:2022,h:2034,l:2018,c:2030,lbl:'BATTLE',note:'6',nc:'#3aaa82',bull:true},
+      {o:2030,h:2050,l:2026,c:2047,lbl:'VERDICT',note:'7 ↑',nc:'#3aaa82',bull:true},
+    ];
+    return mkSVG(cs,{w:740,h:210,
+      ann:[
+        {type:'text',rx:0.5,p:2013,text:'Fasa Peak (candle-4): Terbesar tapi paling berbahaya untuk entry baru',fill:'#888',fs:8,ta:'middle'},
+      ]
+    });
+  })());
+
+  // ── CHART 8: Cascading Exhaustion ──
+  inject('chart-exhaust',(function(){
+    var cs=[
+      {o:2090,h:2092,l:2058,c:2062,lbl:'C1',note:'Body 30p',nc:'#888',bull:false},
+      {o:2062,h:2064,l:2040,c:2044,lbl:'C2',note:'Body 18p',nc:'#888',bull:false},
+      {o:2044,h:2046,l:2030,c:2033,lbl:'C3',note:'Body 11p',nc:'#888',bull:false},
+      {o:2033,h:2035,l:2024,c:2027,lbl:'C4',note:'Body 6p',nc:'#888',bull:false},
+      {o:2027,h:2029,l:2021,c:2024,lbl:'C5',note:'Body 3p',nc:'#c9a44b',bull:false},
+      {o:2024,h:2040,l:2020,c:2037,lbl:'REV',note:'REVERSAL!',nc:'#3aaa82',bull:true},
+      {o:2037,h:2055,l:2034,c:2050,lbl:'→',bull:true},
+    ];
+    return mkSVG(cs,{w:740,h:210,
+      ann:[
+        {type:'line',rx1:0.07,p1:2062,rx2:0.57,p2:2024,c:'#c9a44b',d:'3,3',w:1},
+        {type:'text',rx:0.35,p:2019,text:'Cascading Exhaustion: setiap body bearish lebih kecil → seller kelelahan',fill:'#c9a44b',fs:8,ta:'middle'},
+      ]
+    });
+  })());
+
+  // ── CHART 9: Institutional Fingerprints ──
+  inject('chart-institutional',(function(){
+    var cs=[
+      // 1. Sweep & Reverse (spike down, body up)
+      {o:2060,h:2062,l:2038,c:2058,lbl:'①',note:'Sweep&Rev',nc:'#c9a44b',bull:true},
+      // gap
+      {o:2058,h:2059,l:2057,c:2058,clr:'#111222',lbl:''},
+      // 2. Absorption (big bear, immediate bull)
+      {o:2060,h:2062,l:2038,c:2041,lbl:'②a',bull:false},
+      {o:2041,h:2065,l:2039,c:2062,lbl:'②b',note:'Absorb',nc:'#3aaa82',bull:true},
+      // gap
+      {o:2062,h:2063,l:2061,c:2062,clr:'#111222',lbl:''},
+      // 3. Whisper Accumulation (5 tiny bulls)
+      {o:2050,h:2054,l:2049,c:2053,lbl:'③',bull:true},
+      {o:2053,h:2057,l:2052,c:2056,lbl:'③',note:'Whisper',nc:'#c9a44b',bull:true},
+      {o:2056,h:2060,l:2055,c:2059,lbl:'③',bull:true},
+      // gap
+      {o:2059,h:2060,l:2058,c:2059,clr:'#111222',lbl:''},
+      // 4. Distribute & Go
+      {o:2060,h:2082,l:2056,c:2061,lbl:'④',note:'Dist&Go',nc:'#c54040',bull:false},
+      // gap
+      {o:2061,h:2062,l:2060,c:2061,clr:'#111222',lbl:''},
+      // 5. Compression Spike (tiny body, equal shadows)
+      {o:2060,h:2068,l:2052,c:2061,lbl:'⑤',note:'Compres',nc:'#888',bull:true},
+    ];
+    return mkSVG(cs,{w:740,h:210,margin:0.1});
+  })());
+
+  // ── CHART 10: 7 Trap Candles ──
+  inject('chart-traps',(function(){
+    var cs=[
+      // 1. Bull Trap Engulfing (big bull at resistance, immediately fails)
+      {o:2060,h:2079,l:2056,c:2077,lbl:'①',note:'Bull Trap',nc:'#c54040',bull:true},
+      // gap
+      {o:2077,h:2078,l:2076,c:2077,clr:'#111222',lbl:''},
+      // 2. Hammer Semu (huge lower shadow, bearish body)
+      {o:2066,h:2068,l:2038,c:2063,lbl:'②',note:'Hmr Semu',nc:'#c54040',bull:false},
+      // gap
+      {o:2063,h:2064,l:2062,c:2063,clr:'#111222',lbl:''},
+      // 3. False Retest Bounce
+      {o:2048,h:2056,l:2043,c:2052,lbl:'③',note:'Retest?',nc:'#c54040',bull:true},
+      // gap
+      {o:2052,h:2053,l:2051,c:2052,clr:'#111222',lbl:''},
+      // 4. Exhaustion Breakout (too big)
+      {o:2060,h:2085,l:2058,c:2083,lbl:'④',note:'Exhausted',nc:'#c54040',bull:true},
+      // gap
+      {o:2083,h:2084,l:2082,c:2083,clr:'#111222',lbl:''},
+      // 5. Graveyard (3 green but each close lower in range)
+      {o:2048,h:2062,l:2044,c:2058,lbl:'⑤a',bull:true},
+      {o:2058,h:2070,l:2053,c:2064,lbl:'⑤b',note:'Graveyard',nc:'#c54040',bull:true},
+      {o:2064,h:2076,l:2060,c:2067,lbl:'⑤c',bull:true},
+      // gap
+      {o:2067,h:2068,l:2066,c:2067,clr:'#111222',lbl:''},
+      // 6. Shadow Flip (lower shadow but red)
+      {o:2065,h:2067,l:2042,c:2058,lbl:'⑥',note:'Shd Flip',nc:'#c54040',bull:false},
+      // gap
+      {o:2058,h:2059,l:2057,c:2058,clr:'#111222',lbl:''},
+      // 7. Inside Body Trap
+      {o:2050,h:2075,l:2038,c:2065,lbl:'⑦a',bull:true},
+      {o:2058,h:2067,l:2046,c:2061,lbl:'⑦b',note:'InsideTrap',nc:'#888',bull:false},
+    ];
+    return mkSVG(cs,{w:740,h:220,margin:0.08});
+  })());
+
+  // ── CHART 11: Body Migration ──
+  inject('chart-migration',(function(){
+    // Harga naik perlahan tapi body bermigrasi ke bawah (distribusi tersembunyi)
+    var cs=[
+      {o:2050,h:2062,l:2045,c:2059,lbl:'C1',note:'BPS:88',nc:'#3aaa82',bull:true},  // body top 88%
+      {o:2059,h:2072,l:2054,c:2068,lbl:'C2',note:'BPS:82',nc:'#3aaa82',bull:true},  // body top
+      {o:2068,h:2080,l:2062,c:2075,lbl:'C3',note:'BPS:68',nc:'#c9a44b',bull:true},  // body mid-top
+      {o:2075,h:2088,l:2068,c:2079,lbl:'C4',note:'BPS:55',nc:'#888',bull:true},     // body mid
+      {o:2079,h:2090,l:2072,c:2080,lbl:'C5',note:'BPS:38',nc:'#888',bull:true},     // body mid-bot
+      {o:2080,h:2088,l:2072,c:2077,lbl:'C6',note:'BPS:31',nc:'#c54040',bull:false}, // body low
+      {o:2077,h:2082,l:2068,c:2071,lbl:'C7',note:'BPS:18',nc:'#c54040',bull:false}, // body very low
+      {o:2071,h:2075,l:2055,c:2058,lbl:'DROP',note:'↓DROP',nc:'#c54040',bull:false},// drop
+    ];
+    return mkSVG(cs,{w:740,h:210,
+      ann:[
+        {type:'line',rx1:0.06,p1:2059,rx2:0.56,p2:2080,c:'#3aaa82',d:'4,3',w:1},
+        {type:'line',rx1:0.06,p1:2050,rx2:0.56,p2:2072,c:'#c54040',d:'4,3',w:1},
+        {type:'text',rx:0.32,p:2091,text:'Harga naik → tapi BPS body turun dari 88 ke 18 = distribusi tersembunyi',fill:'#c54040',fs:8,ta:'middle'},
+      ]
+    });
+  })());
+
+  // ── CHART 12: Nested (M15 vs M1 story) ──
+  inject('chart-nested',(function(){
+    // Top row: genuine momentum (5 small bulls forming 1 big bull)
+    // Bottom row: fake momentum (3 bears + 2 big bulls = same result)
+    var cs=[
+      // Top: 5 M1 bulls → genuine M15 bull
+      {o:2050,h:2055,l:2048,c:2054,lbl:'M1'},
+      {o:2054,h:2060,l:2052,c:2059,lbl:'M1'},
+      {o:2059,h:2064,l:2057,c:2063,lbl:'M1',note:'Staircase',nc:'#3aaa82'},
+      {o:2063,h:2069,l:2061,c:2068,lbl:'M1'},
+      {o:2068,h:2074,l:2066,c:2073,lbl:'M1'},
+      // separator
+      {o:2060,h:2061,l:2059,c:2060,clr:'#111222',lbl:''},
+      // Bottom: bears + big bull (End Rush)
+      {o:2050,h:2054,l:2044,c:2046,lbl:'M1',bull:false},
+      {o:2046,h:2050,l:2041,c:2043,lbl:'M1',bull:false},
+      {o:2043,h:2047,l:2038,c:2041,lbl:'M1',bull:false},
+      {o:2041,h:2058,l:2039,c:2055,lbl:'M1',note:'End Rush!',nc:'#c54040',bull:true},
+      {o:2055,h:2074,l:2053,c:2072,lbl:'M1',bull:true},
+    ];
+    return mkSVG(cs,{w:740,h:210,
+      ann:[
+        {type:'text',rx:0.22,p:2076,text:'GENUINE: 5 bull M1 berurutan → M15 sangat kuat',fill:'#3aaa82',fs:8,ta:'middle'},
+        {type:'text',rx:0.78,p:2076,text:'FAKE: 3 bear + 2 bull akhir → M15 identik tapi LEMAH',fill:'#c54040',fs:8,ta:'middle'},
+        {type:'text',rx:0.5,p:2037,text:'Dua M15 candle identical secara visual — cerita M1 menentukan segalanya',fill:'#888',fs:8,ta:'middle'},
+      ]
+    });
+  })());
+
+  // ── CHART 13: Session Behavior ──
+  inject('chart-session',(function(){
+    var cs=[
+      // Asia: small, ranging
+      {o:2060,h:2065,l:2056,c:2062,lbl:'ASIA'},
+      {o:2062,h:2064,l:2058,c:2059,lbl:'ASIA',bull:false},
+      {o:2059,h:2063,l:2056,c:2061,lbl:'ASIA'},
+      {o:2061,h:2064,l:2057,c:2060,lbl:'ASIA',bull:false},
+      // separator
+      {o:2060,h:2061,l:2059,c:2060,clr:'#111222',lbl:''},
+      // London: sweep down (fake), then strong bull
+      {o:2060,h:2063,l:2050,c:2062,lbl:'LDN-1',note:'⚠Sweep',nc:'#c54040',bull:true},
+      {o:2062,h:2065,l:2059,c:2063,lbl:'LDN-2',note:'⚠Fake',nc:'#c54040'},
+      {o:2063,h:2078,l:2061,c:2075,lbl:'LDN-3',note:'REAL →',nc:'#3aaa82',bull:true},
+      {o:2075,h:2083,l:2072,c:2080,lbl:'LDN-4',bull:true},
+      // separator
+      {o:2080,h:2081,l:2079,c:2080,clr:'#111222',lbl:''},
+      // NY: volatile, reversal spike
+      {o:2080,h:2095,l:2072,c:2074,lbl:'NY-1',note:'Spike!',nc:'#c54040',bull:false},
+      {o:2074,h:2079,l:2065,c:2068,lbl:'NY-2',bull:false},
+      {o:2068,h:2085,l:2065,c:2082,lbl:'NY-3',bull:true},
+      {o:2082,h:2088,l:2078,c:2085,lbl:'NY-4',bull:true},
+    ];
+    return mkSVG(cs,{w:740,h:220,
+      zones:[
+        {top:2062,bot:2057,fill:'#5090cc',op:0.06,label:'Asia Range'},
+      ],
+      ann:[
+        {type:'text',rx:0.14,p:2050,text:'ASIA: kecil, ranging',fill:'#5090cc',fs:8,ta:'middle'},
+        {type:'text',rx:0.48,p:2046,text:'LONDON: sweep dulu candle 1-2, arah real di candle ke-3+',fill:'#c9a44b',fs:8,ta:'middle'},
+        {type:'text',rx:0.85,p:2063,text:'NY: volatile, hati-hati spike palsu',fill:'#c54040',fs:8,ta:'middle'},
+      ]
+    });
+  })());
+
+  // ── CHART 14: Synthesis Setup ──
+  inject('chart-synthesis',(function(){
+    var cs=[
+      // Asian range
+      {o:2060,h:2064,l:2057,c:2061,lbl:'A'},
+      {o:2061,h:2063,l:2058,c:2060,lbl:'A',bull:false},
+      {o:2060,h:2064,l:2057,c:2062,lbl:'A'},
+      // London sweep low
+      {o:2062,h:2063,l:2048,c:2060,lbl:'SWEEP',note:'①Sweep',nc:'#c9a44b',bull:false},
+      // Whisper accumulation
+      {o:2060,h:2064,l:2058,c:2063,lbl:'W'},
+      {o:2063,h:2067,l:2061,c:2066,lbl:'W',note:'②Whisper',nc:'#3aaa82'},
+      {o:2066,h:2070,l:2064,c:2069,lbl:'W',bull:true},
+      {o:2069,h:2073,l:2067,c:2072,lbl:'W',bull:true},
+      // Verdict / breakout
+      {o:2072,h:2095,l:2070,c:2091,lbl:'VERDICT',note:'③LONG!',nc:'#3aaa82',bull:true},
+      {o:2091,h:2105,l:2088,c:2100,lbl:'→',bull:true},
+    ];
+    return mkSVG(cs,{w:740,h:220,
+      zones:[{top:2064,bot:2057,fill:'#5090cc',op:0.07,label:'Asian Box'}],
+      ann:[
+        {type:'hline',p:2048,fill:'#c54040',d:'3,2',w:1,x1:0,x2:1,lbl:'Sweep Low (Stop Hunt)'},
+        {type:'text',rx:0.5,p:2044,text:'12-Dimension Score: +19/24 → Full Confidence Entry LONG',fill:'#3aaa82',fs:9,ta:'middle'},
+      ]
+    });
+  })());
+
+  // ── CHART 15: Final complete setup ──
+  inject('chart-final',(function(){
+    var cs=[
+      {o:2065,h:2072,l:2060,c:2068,lbl:'C1',bull:true},
+      {o:2068,h:2070,l:2058,c:2062,lbl:'C2',bull:false},
+      {o:2062,h:2068,l:2044,c:2065,lbl:'C3',note:'Sweep↓',nc:'#c9a44b',bull:true},
+      {o:2065,h:2069,l:2063,c:2068,lbl:'W1',bull:true},
+      {o:2068,h:2073,l:2066,c:2072,lbl:'W2',bull:true},
+      {o:2072,h:2076,l:2070,c:2075,lbl:'W3',note:'Whisper',nc:'#3aaa82',bull:true},
+      {o:2075,h:2079,l:2073,c:2078,lbl:'W4',bull:true},
+      {o:2078,h:2100,l:2076,c:2096,lbl:'ENTRY',note:'↑LONG',nc:'#3aaa82',bull:true},
+      {o:2096,h:2110,l:2092,c:2106,lbl:'TP1',bull:true},
+      {o:2106,h:2118,l:2102,c:2114,lbl:'TP2',bull:true},
+    ];
+    return mkSVG(cs,{w:740,h:220,
+      ann:[
+        {type:'hline',p:2044,fill:'#c54040',d:'3,2',w:1,x1:0,x2:0.35,lbl:'SL di bawah sweep'},
+        {type:'hline',p:2100,fill:'#3aaa82',d:'3,2',w:1,x1:0,x2:0.9,lbl:'TP1'},
+        {type:'hline',p:2114,fill:'#3aaa82',d:'3,2',w:1,x1:0,x2:0.98,lbl:'TP2'},
+        {type:'text',rx:0.5,p:2040,text:'SL: 10 pip bawah sweep low | TP1: +36p | TP2: +50p | RRR 1:5',fill:'#888',fs:8,ta:'middle'},
+      ]
+    });
+  })());
+
+})();
+</script>
+</body>
+</html>
